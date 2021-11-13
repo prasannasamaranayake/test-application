@@ -13,12 +13,6 @@ export class LayoutComponent implements OnInit {
 
   navItems: string[] = ['Snapshot Report', 'Some Other Nav'];
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
-
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) {}
 
   ngOnInit(): void {

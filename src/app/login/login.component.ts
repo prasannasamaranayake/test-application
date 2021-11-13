@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit {
     this.initForms();
   }
 
+  /**
+   * Form Initialization
+   */
   public initForms() {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -37,6 +40,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Validate and login with given user details
+   */
   public onLogin() {
     if (this.loginForm.valid) {
       const enteredUsername = this.loginForm.get('username')?.value;
@@ -48,6 +54,9 @@ export class LoginComponent implements OnInit {
 
   }
 
+  /**
+   * Register User Details
+   */
   public onRegister() {
     if (this.registerForm.valid) {
       const enteredUsername = this.registerForm.get('username')?.value;
@@ -63,6 +72,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * Switch between login and register forms
+   */
   public switchForm() {
     this.isLogin = !this.isLogin;
   }

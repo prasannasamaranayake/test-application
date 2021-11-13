@@ -70,6 +70,10 @@ export class ReportComponent implements OnInit {
     return formattedDf && formattedDt ? `Overall results for the period: ${formattedDf} - ${formattedDt}` : 'Overall results';
   }
 
+  /**
+   * Create Flatten Objects of Activities
+   * @private
+   */
   private flattenActivities(){
     this.classes.forEach( cls => {
       cls.students.forEach( stud => {
@@ -81,6 +85,12 @@ export class ReportComponent implements OnInit {
     console.log(this.flatActivities);
   }
 
+  /**
+   * Map a single flat activity
+   * @param cls
+   * @param studAct
+   * @private
+   */
   private createFlatActivity(cls: Class, studAct: Activity): FlatActivity{
     const flatActivity = new FlatActivity();
     flatActivity.classId = cls.id;
@@ -99,6 +109,10 @@ export class ReportComponent implements OnInit {
     return flatActivity;
   }
 
+  /**
+   * Init filter form
+   * @private
+   */
   private initFilterForm(){
     this.filterForm = this.formBuilder.group({
       classId: [''],
@@ -108,16 +122,31 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  /**
+   * Init mat table
+   * @private
+   */
   private createTable(){
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(this.flatActivities);
     this.tableView.dataSource.sort = this.sort;
   }
 
+  /**
+   * Set Filtered data for table data source
+   * @param filterCriteria
+   * @private
+   */
   private filterDataSource(filterCriteria: FilterCriteria){
     const filteredData = this.flatActivities.filter( data => this.filterData(data, filterCriteria));
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(filteredData);
   }
 
+  /**
+   * Filter out data upon criteria
+   * @param activity
+   * @param filterCriteria
+   * @private
+   */
   private filterData(activity: FlatActivity, filterCriteria: FilterCriteria): boolean{
     const classMatched = !filterCriteria.classId || activity.classId === filterCriteria.classId;
     const studentMatched = !filterCriteria.student || activity.student === filterCriteria.student;
