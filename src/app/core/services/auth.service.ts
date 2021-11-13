@@ -8,11 +8,16 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  private loggedInUserSubject: BehaviorSubject<User>;
+  private loggedInUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(new User());
   public loggedInUser: Observable<User>;
 
   constructor(private router: Router) {
-    this.loggedInUserSubject = new BehaviorSubject<User>(new User());
+    const localStoredUser = localStorage.getItem('registeredUser');
+    let registeredUser;
+    if (localStoredUser) {
+      registeredUser = JSON.parse(localStoredUser) as User;
+      this.loggedInUserSubject = new BehaviorSubject<User>(registeredUser);
+    }
     //this.loggedInUserSubject = new BehaviorSubject<User>(new User('JohnDoe', '123'));
     this.loggedInUser = this.loggedInUserSubject.asObservable();
   }

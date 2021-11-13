@@ -11,7 +11,7 @@
   <span>Test Reports App</span>
   <span class="empty-spacer"></span>
   <!-- User Details-->
-  <span class="user-name">John Doe</span>
+  <span class="user-name">{{username}}</span>
   <button mat-icon-button>
     <mat-icon>account_circle</mat-icon>
   </button>
@@ -20,11 +20,11 @@
 <!-- App Side Nav Container -->
 <mat-sidenav-container class="sidenav-container">
   <!-- Side Nav -->
-  <mat-sidenav #drawer mode="side" opened class="sidenav">
-    <mat-selection-list #shoes [multiple]="false">
-      <ng-container *ngFor="let shoe of typesOfShoes">
-        <mat-list-option [value]="shoe">
-          {{shoe}}
+  <mat-sidenav #drawer mode="side" class="sidenav">
+    <mat-selection-list [multiple]="false">
+      <ng-container *ngFor="let navItem of navItems">
+        <mat-list-option [value]="navItem">
+          {{navItem}}
         </mat-list-option>
         <mat-divider></mat-divider>
       </ng-container>
