@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   /**
-   * Checks given user is locally stored and if success go to main view
+   * Checks given user is locally stored and if success go to content view
    * @param user
    */
   public login(user: User): void {
@@ -37,7 +37,7 @@ export class AuthService {
       registeredUser = JSON.parse(localStoredUser) as User;
       if (registeredUser && registeredUser.username === user.username && registeredUser.password === user.password) {
         this.loggedInUserSubject = new BehaviorSubject<User>(registeredUser);
-        void this.router.navigate(['main']);
+        void this.router.navigate(['content']);
       }
     }
   }

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {MainRoutingModule} from './main-routing.module';
+import {ContentRoutingModule} from './content-routing.module';
 import {ReportComponent} from './report/report.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ReportsService} from "../core/services/reports.service";
@@ -13,10 +13,10 @@ import {ReportsService} from "../core/services/reports.service";
   ],
   imports: [
     CommonModule,
-    MainRoutingModule
+    ContentRoutingModule
   ],
   providers: [
     ReportsService
   ]
 })
-export class MainModule { }
+export class ContentModule { }

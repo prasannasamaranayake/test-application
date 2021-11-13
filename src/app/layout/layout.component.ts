@@ -6,10 +6,10 @@ import {AuthService} from "../core/services/auth.service";
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class LayoutComponent implements OnInit {
 
   navItems: string[] = ['Snapshot Report', 'Some Other Nav'];
 
