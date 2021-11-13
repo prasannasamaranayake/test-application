@@ -5,6 +5,10 @@ import {ReportComponent} from "./report/report.component";
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'report'
+  },
+  {
+    path: 'report',
     component: ReportComponent
   }
 ];
