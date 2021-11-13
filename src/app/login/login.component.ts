@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../core/services/auth.service";
 import {User} from "../core/models/user.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -47,7 +49,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const enteredUsername = this.loginForm.get('username')?.value;
       const enteredPassword = this.loginForm.get('password')?.value;
-      this.authService.login(new User(enteredUsername, enteredPassword));
+      this.authService.login(
+        new User(enteredUsername, enteredPassword),
+        () => {
+          this.snackBar.open('Invalid Credentials!', '', {duration: 2500});
+          this.loginForm.patchValue({username: '', password: ''})
+        });
     } else {
       this.loginForm.markAllAsTouched();
     }
@@ -64,9 +71,10 @@ export class LoginComponent implements OnInit {
       const enteredConfirmPassword = this.registerForm.get('confirmPassword')?.value;
       if (enteredPassword.trim() === enteredConfirmPassword.trim()) {
         this.authService.register(new User(enteredUsername, enteredPassword));
+        this.snackBar.open('Successfully Registered!', '', {duration: 3000});
         this.switchForm();
       } else {
-        this.registerForm.get('confirmPassword')?.patchValue({confirmPassword: ''});
+        this.registerForm.patchValue({confirmPassword: ''});
         this.registerForm.updateValueAndValidity({onlySelf: true});
       }
     }

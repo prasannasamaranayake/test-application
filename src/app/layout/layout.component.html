@@ -12,9 +12,12 @@
   <span class="empty-spacer"></span>
   <!-- User Details-->
   <span class="user-name">{{username}}</span>
-  <button mat-icon-button>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>account_circle</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
 </mat-toolbar>
 
 <!-- App Side Nav Container -->
