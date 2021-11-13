@@ -1,0 +1,72 @@
+<div class="login-page vertical-center">
+  <div class="container">
+    <div class="row">
+      <!-- Empty content -->
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="content"></div>
+      </div>
+      <!-- Login Form -->
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="c-box c-box--full">
+          <!-- Header -->
+          <div class="c-box__header">
+            <div class="c-box__main-title">Sign in</div>
+            <h3>Use your login details for Test Reports App</h3>
+          </div>
+          <!-- Login Form -->
+          <form [formGroup]="loginForm" *ngIf="loginForm && isLogin">
+            <div class="default-input">
+              <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input formControlName="username" matInput>
+              </mat-form-field>
+            </div>
+            <div class="default-input">
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput>
+              </mat-form-field>
+            </div>
+          </form>
+
+          <!-- Register Form -->
+          <form [formGroup]="registerForm" *ngIf="registerForm && !isLogin">
+            <div class="default-input">
+              <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input formControlName="username" matInput>
+              </mat-form-field>
+            </div>
+            <div class="default-input">
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput>
+              </mat-form-field>
+            </div>
+            <div class="default-input">
+              <mat-form-field appearance="outline">
+                <mat-label>Confirm password</mat-label>
+                <input formControlName="confirmPassword" matInput>
+              </mat-form-field>
+            </div>
+          </form>
+
+          <!-- Form Actions -->
+          <div class="default-actions">
+            <div class="row">
+              <div class="col-6">
+                <button mat-button color="primary" (click)="switchForm()">{{isLogin ? 'Register' : 'Back to login'}}</button>
+              </div>
+              <div class="col-6" *ngIf="isLogin">
+                <button mat-raised-button color="primary" class="float-right" (click)="onLogin()">Login</button>
+              </div>
+              <div class="col-6" *ngIf="!isLogin">
+                <button mat-raised-button color="primary" class="float-right" (click)="onRegister()">Register</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

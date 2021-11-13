@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'styles/_base/root.base';
+@import 'styles/_helper.layout';
+@import 'styles/_components/box-.component';
+@import 'styles/bootstrap-grid.min';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,43 @@
+<!-- App Toolbar -->
+<mat-toolbar color="primary" class="app-header">
+  <!-- Toggle -->
+  <button
+    type="button"
+    aria-label="Toggle sidenav"
+    mat-icon-button
+    (click)="drawer.toggle()">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <span>Test Reports App</span>
+  <span class="empty-spacer"></span>
+  <!-- User Details-->
+  <span class="user-name">John Doe</span>
+  <button mat-icon-button>
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<!-- App Side Nav Container -->
+<mat-sidenav-container class="sidenav-container">
+  <!-- Side Nav -->
+  <mat-sidenav #drawer mode="side" opened class="sidenav">
+    <mat-selection-list #shoes [multiple]="false">
+      <ng-container *ngFor="let shoe of typesOfShoes">
+        <mat-list-option [value]="shoe">
+          {{shoe}}
+        </mat-list-option>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-selection-list>
+  </mat-sidenav>
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <!-- Content -->
+    <router-outlet></router-outlet>
+    <!-- Toolbar -->
+    <mat-toolbar class="app-footer">
+      <span class="inline-center">Test Reports App V1.0.0</span>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

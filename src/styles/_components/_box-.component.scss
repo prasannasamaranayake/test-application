@@ -1,0 +1,35 @@
+.c-box {
+  padding: 0;
+  border-radius: var(--base-corner-xs);
+  background-color: var(--body-content-white);
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--boarder-light);
+  //box-shadow: var(--shadow-header);
+
+  &--full{
+    padding: var(--base-space-l);
+
+    .c-box__header{
+      padding: 0 0 var(--base-space-xl) 0;
+      text-align: center;
+    }
+
+    .c-box__main-title{
+      font-size: xx-large;
+      padding: var(--base-space-xl) 0 var(--base-space-xl) 0;
+      //font: var(--heading-large);
+    }
+
+    .mat-form-field{
+      width: 100%;
+    }
+
+    .default-actions {
+      .float-right{
+        float: right;
+      }
+    }
+
+  }
+}

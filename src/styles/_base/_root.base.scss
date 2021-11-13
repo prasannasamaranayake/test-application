@@ -1,0 +1,47 @@
+:root {
+  font-size: 10px;
+
+  //fonts
+  --heading-large: normal 400 6.7rem/10rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --heading-h1: normal 800 6.7rem/10rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --heading-h2: normal 800 5.1rem/7.7rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --heading-h3: normal 700 3.8rem/5.7rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --body-base-default: normal 400 1.6rem/2.4rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --body-small-default: normal 500 1.4rem/2.1rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --body-xsmall-bold: normal 700 1.2rem/1.8rem 'Roboto', 'Helvetica Neue', sans-serif;
+  --body-caption-regular: normal 400 1.2rem/1.8rem 'Roboto', 'Helvetica Neue', sans-serif;
+
+  // boarders
+  --boarder-light: rgba(0,0,0,.12);
+
+  // background
+  --body-secondary: #686d74;
+  --body-light: #9aa2a7;
+  --body-lightest: #f9f9f9;
+
+  // body colors
+  --body-content-primary: #182538;
+  --body-content-secondary: #686d74;
+  --body-content-tertiary: #bdc0c4;
+  --body-content-quaternary: #e3e6e8;
+  --body-content-shade: #f6f7f9;
+  --body-content-white: #fff;
+  --body-content-light: #9aa2a7;
+  --body-content-lightest: #f9f9f9;
+  --body-background-body: #e5e5e5;
+
+  // spaces
+  --base-space-s:0.8rem;
+  --base-space-m:1.6rem;
+  --base-space-l:2.4rem;
+  --base-space-xl:3.2rem;
+
+  // corners
+  --base-corner-xs:0.4rem;
+  --base-corner-s:0.8rem;
+
+  // shadows
+  --shadow-header: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
+
+}
+
