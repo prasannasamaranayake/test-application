@@ -8,14 +8,4 @@ export class Activity {
   time: string;
   skill: string;
   type: string;
-
-  constructor() {
-    this.id = -1;
-    this.content = '';
-    this.attempts = new Attempts();
-    this.student = '';
-    this.time = '';
-    this.skill = '';
-    this.type = '';
-  }
 }

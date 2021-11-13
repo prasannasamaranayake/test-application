@@ -6,30 +6,34 @@
   <!-- Body -->
   <div class="content-body">
     <!-- Filter -->
-    <div class="filter-bar">
-      <mat-form-field appearance="outline">
-        <mat-label>Select Class</mat-label>
-        <mat-select>
-          <mat-option value="cls.name" *ngFor="let cls of classes">{{cls.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Select Student</mat-label>
-        <mat-select>
-          <mat-option value="stud" *ngFor="let stud of students">{{stud}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>Date Range</mat-label>
-        <mat-date-range-input
-          [rangePicker]="rangePicker">
-          <input matStartDate placeholder="Start date">
-          <input matEndDate placeholder="End date">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
-        <mat-date-range-picker #rangePicker></mat-date-range-picker>
-      </mat-form-field>
-    </div>
+    <form [formGroup]="filterForm">
+      <div class="filter-bar">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Class</mat-label>
+          <mat-select formControlName="classId">
+            <mat-option [value]="">None</mat-option>
+            <mat-option [value]="cls.id" *ngFor="let cls of classes">{{cls.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Select Student</mat-label>
+          <mat-select formControlName="student">
+            <mat-option [value]="">None</mat-option>
+            <mat-option [value]="stud" *ngFor="let stud of students">{{stud}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="example-form-field" appearance="outline">
+          <mat-label>Date Range</mat-label>
+          <mat-date-range-input
+            [rangePicker]="rangePicker">
+            <input matStartDate formControlName="dateFrom" placeholder="Start date">
+            <input matEndDate formControlName="dateTo" placeholder="End date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+          <mat-date-range-picker #rangePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </form>
     <!-- Chart -->
     <div class="chart">
       <div class="chart__title">Overall results for the period: {{55}}</div>
@@ -56,7 +60,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> DATE COMPLETED</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
               <ng-container>
-                {{element.completedDate}}
+                {{element.completedDate | dateFormatter}}
               </ng-container>
             </mat-cell>
           </ng-container>
@@ -96,7 +100,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> RESULT</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
               <ng-container>
-                {{element.average}}
+                {{element.average}}%
               </ng-container>
             </mat-cell>
           </ng-container>

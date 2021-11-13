@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {TableView} from "../../core/models/ui/table-view.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-report',
@@ -25,8 +26,10 @@ export class ReportComponent implements OnInit {
   public students: string[] = [];
   public flatActivities: FlatActivity[] = [];
   public tableView: TableView<FlatActivity> = new TableView(this.columns);
+  public filterForm: FormGroup = new FormGroup({});
 
-  constructor(private reportsService: ReportsService) {
+  constructor(private reportsService: ReportsService, private formBuilder: FormBuilder) {
+    this.initFilterForm();
   }
 
   ngOnInit(): void {
@@ -35,11 +38,17 @@ export class ReportComponent implements OnInit {
       .subscribe(results => {
         this.classes = results[0];
         this.activities = results[1];
-        const duplicatedStudents = [...this.classes.map(cls => [...cls.students])];
-        this.students = [...new Set( this.activities.map(obj => obj.student)) ];// Extract unique students from Activities
+        this.students = this.getUniqueStudents();
         this.flattenActivities();
         this.createTable();
       });
+
+    this.filterForm.valueChanges.subscribe( values => {
+      if(values){
+        const filterCriteria = new FilterCriteria(values.classId, values.student, values.dateFRom, values.dateTo);
+        this.filterDataSource(filterCriteria);
+      }
+    });
   }
 
   private flattenActivities(){
@@ -71,12 +80,43 @@ export class ReportComponent implements OnInit {
     return flatActivity;
   }
 
+  private initFilterForm(){
+    this.filterForm = this.formBuilder.group({
+      classId: [''],
+      student: [''],
+      dateFrom: [''],
+      dateTo: [''],
+    });
+  }
+
   private createTable(){
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(this.flatActivities);
-    setTimeout(() => {
-      // Timeout needs otherwise sort is not initialized in dom
-      this.tableView.dataSource.sort = this.sort;
-    }, 0);
+    this.tableView.dataSource.sort = this.sort;
+  }
+
+  private filterDataSource(filterCriteria: FilterCriteria){
+    const filteredData = this.flatActivities.filter( data => this.filterData(data, filterCriteria));
+    this.tableView.dataSource = new MatTableDataSource<FlatActivity>(filteredData);
+  }
+
+  private filterData(activity: FlatActivity, filterCriteria: FilterCriteria): boolean{
+    const classMatched = !filterCriteria.classId || activity.classId === filterCriteria.classId;
+    const studentMatched = !filterCriteria.student || activity.student === filterCriteria.student;
+    const dateFromMatched = !filterCriteria.dateFrom || moment(activity.completedDate, 'DD/MM/YY', true) >= moment(filterCriteria.dateFrom);
+    const dateToMatched = !filterCriteria.dateTo || moment(activity.completedDate, 'DD/MM/YY', true) <= moment(filterCriteria.dateTo);
+
+    return classMatched && studentMatched && dateFromMatched && dateToMatched;
+  }
+
+  /**
+   * Extract uniques students from classes array
+   * @private
+   */
+  private getUniqueStudents(): string[]{
+    const duplicatedStudentsArr = this.classes.map(cls => cls.students);
+    const uniqueStudents = [...new Set( duplicatedStudentsArr.reduce((a, b) => a.concat(b), []) ) ];
+    // Sorting by last name
+    return uniqueStudents.sort((a, b) => a.split(' ')[1]?.localeCompare(b.split(' ')[1]));
   }
 
 }
@@ -92,17 +132,18 @@ export class FlatActivity{
   time: string;
   completedDate: string;
   average: number
+}
 
-  constructor() {
-    this.classId = -1;
-    this.className = '';
-    this.student = '';
-    this.activityId = -1;
-    this.content = '';
-    this.type = '';
-    this.skill = '';
-    this.time = '';
-    this.completedDate = '';
-    this.average = -1;
+export class FilterCriteria{
+  classId: number;
+  student: string;
+  dateFrom: string;
+  dateTo: string;
+
+  constructor(classId: number, student: string, dateFrom: string, dateTo: string) {
+    this.classId = classId;
+    this.student = student;
+    this.dateFrom = dateFrom;
+    this.dateTo = dateTo;
   }
 }
