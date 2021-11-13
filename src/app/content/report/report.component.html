@@ -35,21 +35,7 @@
       </div>
     </form>
     <!-- Chart -->
-    <div class="chart">
-      <div class="chart__title">Overall results for the period: {{55}}</div>
-      <div class="c-progress-bar">
-        <div class="c-progress-bar__item c-progress-bar__item--unassigned" style="max-width: 20%"></div>
-        <div class="c-progress-bar__item c-progress-bar__item--week" style="max-width: 20%"></div>
-        <div class="c-progress-bar__item c-progress-bar__item--ok" style="max-width: 20%"></div>
-        <div class="c-progress-bar__item c-progress-bar__item--excellent" style="max-width: 40%"></div>
-      </div>
-      <div class="chart__legend">
-        <span class="chart__legend-item chart__legend-item--unassigned">Unassigned ({{5}}%)</span>
-        <span class="chart__legend-item chart__legend-item--week">Weak ({{5}}%)</span>
-        <span class="chart__legend-item chart__legend-item--ok">Ok ({{5}}%)</span>
-        <span class="chart__legend-item chart__legend-item--excellent">Excellent ({{5}}%)</span>
-      </div>
-    </div>
+    <app-chart [chartView]="chartView"></app-chart>
     <!-- Table -->
     <div class="row">
       <div class="c-table__container">

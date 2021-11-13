@@ -13,6 +13,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {PipesModule} from "../core/utils/pipes/pipes.module";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import {PipesModule} from "../core/utils/pipes/pipes.module";
   imports: [
     CommonModule,
     ContentRoutingModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,

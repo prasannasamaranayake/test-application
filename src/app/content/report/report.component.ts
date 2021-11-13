@@ -9,6 +9,7 @@ import {TableView} from "../../core/models/ui/table-view.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ChartView} from "../../core/models/ui/chart-view.model";
 
 @Component({
   selector: 'app-report',
@@ -49,6 +50,16 @@ export class ReportComponent implements OnInit {
         this.filterDataSource(filterCriteria);
       }
     });
+  }
+
+  public get chartView(): ChartView{
+    const excellentCount = this.tableView.dataSource.data.filter( data => data.average >= 90).length;
+    const goodCount = this.tableView.dataSource.data.filter( data => data.average >= 80 && data.average < 90).length;
+    const okCount = this.tableView.dataSource.data.filter( data => data.average >= 60 && data.average < 80).length;
+    const weekCount = this.tableView.dataSource.data.filter( data => data.average < 60).length;
+    const unassignedCount = 20;
+    return new ChartView()
+    // return new ChartView(excellentCount, goodCount, okCount, weekCount, unassignedCount)
   }
 
   private flattenActivities(){

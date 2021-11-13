@@ -8,12 +8,15 @@
     flex: 1 1 100%;
     box-sizing: border-box;
     &--unassigned{
-      background: var(--chart-l4);
+      background: var(--chart-l5);
     }
     &--week{
-      background: var(--chart-l3);
+      background: var(--chart-l4);
     }
     &--ok{
+      background: var(--chart-l3);
+    }
+    &--good{
       background: var(--chart-l2);
     }
     &--excellent{
@@ -29,6 +32,7 @@
     padding: var(--base-space-m) 0;
   }
   &__legend{
+    padding: var(--base-space-m) 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
