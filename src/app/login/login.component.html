@@ -5,26 +5,28 @@
       <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="content"></div>
       </div>
-      <!-- Login Form -->
+      <!-- Form -->
       <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div class="c-box c-box--full">
           <!-- Header -->
           <div class="c-box__header">
-            <div class="c-box__main-title">Sign in</div>
-            <h3>Use your login details for Test Reports App</h3>
+            <div class="c-box__main-title">{{isLogin ? 'Sign in' : 'Register'}}</div>
+            <h3>{{isLogin ? 'Use your login details for Test Reports App' : 'Create your Test Reports App account'}}</h3>
           </div>
           <!-- Login Form -->
           <form [formGroup]="loginForm" *ngIf="loginForm && isLogin">
             <div class="default-input">
               <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
-                <input formControlName="username" matInput>
+                <input required formControlName="username" matInput>
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div class="default-input">
               <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" matInput>
+                <input required type="password" formControlName="password" matInput>
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
           </form>
@@ -34,19 +36,22 @@
             <div class="default-input">
               <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
-                <input formControlName="username" matInput>
+                <input required formControlName="username" matInput>
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div class="default-input">
               <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" matInput>
+                <input required type="password" formControlName="password" matInput>
+                <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
             <div class="default-input">
               <mat-form-field appearance="outline">
                 <mat-label>Confirm password</mat-label>
-                <input formControlName="confirmPassword" matInput>
+                <input required type="password" formControlName="confirmPassword" matInput>
+                <mat-error>Invalid</mat-error>
               </mat-form-field>
             </div>
           </form>

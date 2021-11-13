@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../core/services/auth.service";
+import {User} from "../core/models/user.model";
 
 @Component({
   selector: 'app-login',
@@ -14,34 +16,54 @@ export class LoginComponent implements OnInit {
   public isLogin = true;
 
   constructor(
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private authService: AuthService
+  ) {
+  }
 
   ngOnInit(): void {
     this.initForms();
   }
 
-  public initForms(){
+  public initForms() {
     this.loginForm = this.formBuilder.group({
-      username: [''],
-      password: ['']
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.registerForm = this.formBuilder.group({
-      username: [''],
-      password: [''],
-      confirmPassword: ['']
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
     });
   }
 
-  public onLogin(){
+  public onLogin() {
+    if (this.loginForm.valid) {
+      const enteredUsername = this.loginForm.get('username')?.value;
+      const enteredPassword = this.loginForm.get('password')?.value;
+      this.authService.login(new User(enteredUsername, enteredPassword));
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
 
   }
 
-  public onRegister(){
-
+  public onRegister() {
+    if (this.registerForm.valid) {
+      const enteredUsername = this.registerForm.get('username')?.value;
+      const enteredPassword = this.registerForm.get('password')?.value;
+      const enteredConfirmPassword = this.registerForm.get('confirmPassword')?.value;
+      if (enteredPassword.trim() === enteredConfirmPassword.trim()) {
+        this.authService.register(new User(enteredUsername, enteredPassword));
+        this.switchForm();
+      } else {
+        this.registerForm.get('confirmPassword')?.patchValue({confirmPassword: ''});
+        this.registerForm.updateValueAndValidity({onlySelf: true});
+      }
+    }
   }
 
-  public switchForm(){
+  public switchForm() {
     this.isLogin = !this.isLogin;
   }
 
