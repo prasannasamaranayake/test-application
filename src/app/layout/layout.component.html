@@ -20,7 +20,7 @@
 <!-- App Side Nav Container -->
 <mat-sidenav-container class="sidenav-container">
   <!-- Side Nav -->
-  <mat-sidenav #drawer mode="side" class="sidenav">
+  <mat-sidenav #drawer mode="side" opened class="sidenav">
     <mat-selection-list [multiple]="false">
       <ng-container *ngFor="let navItem of navItems">
         <mat-list-option [value]="navItem">

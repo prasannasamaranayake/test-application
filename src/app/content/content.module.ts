@@ -3,8 +3,14 @@ import {CommonModule} from '@angular/common';
 
 import {ContentRoutingModule} from './content-routing.module';
 import {ReportComponent} from './report/report.component';
-import {HttpClientModule} from "@angular/common/http";
 import {ReportsService} from "../core/services/reports.service";
+import {MatInputModule} from "@angular/material/input";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -13,10 +19,19 @@ import {ReportsService} from "../core/services/reports.service";
   ],
   imports: [
     CommonModule,
-    ContentRoutingModule
+    ContentRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
-    ReportsService
+    ReportsService,
+    MatNativeDateModule
   ]
 })
 export class ContentModule { }

@@ -1,4 +1,117 @@
-<p>report works!</p>
-<h1>Arc Bond</h1>
-<h2>Arc Bond</h2>
-<h3>Arc Bond</h3>
+<div class="content-wrapper">
+  <!-- Header -->
+  <div class="content-header">
+    <h1>Reporting - Student Snapshot</h1>
+  </div>
+  <!-- Body -->
+  <div class="content-body container">
+    <!-- Filter -->
+    <div class="row">
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Class</mat-label>
+          <mat-select>
+            <mat-option value="cls.name" *ngFor="let cls of classes">{{cls.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Student</mat-label>
+          <mat-select>
+            <mat-option value="stud" *ngFor="let stud of students">{{stud}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-4">
+        <mat-form-field class="example-form-field" appearance="outline">
+          <mat-label>First campaign</mat-label>
+          <mat-date-range-input
+            [rangePicker]="campaignOnePicker">
+            <input matStartDate placeholder="Start date" formControlName="start">
+            <input matEndDate placeholder="End date" formControlName="end">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+          <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Chart -->
+    <div class="row">
+
+    </div>
+    <!-- Table -->
+    <div class="row">
+      <div class="c-table__container">
+        <mat-table [dataSource]="tableView.dataSource" matSort style="width: max-content; min-width: 100%">
+
+          <!-- Completed Date Column -->
+          <ng-container matColumnDef="completedDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> DATE COMPLETED</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                {{element.completedDate}}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Content Column -->
+          <ng-container matColumnDef="content">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> CONTENT</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                <div class="body-base-medium"> {{element.content}}</div>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Type Column -->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> TYPE</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                {{element.type}}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Skill Column -->
+          <ng-container matColumnDef="skill">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> SKILL</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                {{element.skill}}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Result Column -->
+          <ng-container matColumnDef="average">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> RESULT</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                {{element.average}}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Time Spent Column -->
+          <ng-container matColumnDef="time">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> TIME SPENT</mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                {{element.time}}
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Row Definitions-->
+          <mat-header-row [@.disabled]="true"
+                          *matHeaderRowDef="tableView.displayedColumns ;sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: tableView.displayedColumns;let i = index;">
+          </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
