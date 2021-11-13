@@ -46,7 +46,7 @@
         content: '';
         width: 10px;
         height: 10px;
-        background: var(--chart-l4);
+        background: var(--chart-l5);
         margin-right: var(--base-corner-xs);
       }
     }
@@ -55,11 +55,20 @@
         content: '';
         width: 10px;
         height: 10px;
-        background: var(--chart-l3);
+        background: var(--chart-l4);
         margin-right: var(--base-corner-xs);
       }
     }
     &--ok{
+      &::before{
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: var(--chart-l3);
+        margin-right: var(--base-corner-xs);
+      }
+    }
+    &--good{
       &::before{
         content: '';
         width: 10px;

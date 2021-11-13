@@ -62,6 +62,14 @@ export class ReportComponent implements OnInit {
     // return new ChartView(excellentCount, goodCount, okCount, weekCount, unassignedCount)
   }
 
+  public get headerText(): string{
+    const df = this.filterForm.get('dateFrom')?.value;
+    const dt = this.filterForm.get('dateTo')?.value;
+    const formattedDf = df ? moment(df).format('DD MMM YYYY') : '';
+    const formattedDt = dt ? moment(dt).format('DD MMM YYYY'): '';
+    return formattedDf && formattedDt ? `Overall results for the period: ${formattedDf} - ${formattedDt}` : 'Overall results';
+  }
+
   private flattenActivities(){
     this.classes.forEach( cls => {
       cls.students.forEach( stud => {

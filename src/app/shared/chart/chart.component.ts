@@ -9,6 +9,7 @@ import {ChartView} from "../../core/models/ui/chart-view.model";
 export class ChartComponent implements OnInit {
 
   @Input() public chartView: ChartView = new ChartView();
+  @Input() public headerText: string;
 
   constructor() { }
 

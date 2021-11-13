@@ -35,7 +35,7 @@
       </div>
     </form>
     <!-- Chart -->
-    <app-chart [chartView]="chartView"></app-chart>
+    <app-chart [chartView]="chartView" [headerText]="headerText" *ngIf="!filterForm.controls['student'].value"></app-chart>
     <!-- Table -->
     <div class="row">
       <div class="c-table__container">
