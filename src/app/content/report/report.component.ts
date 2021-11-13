@@ -10,6 +10,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ChartView} from "../../core/models/ui/chart-view.model";
+import {FlatActivity} from "../../core/models/ui/flat-activity.model";
+import {FilterCriteria} from "../../core/models/ui/filter-criteria.model";
+import {CommonHelperService} from "../../core/utils/common-helper.service";
 
 @Component({
   selector: 'app-report',
@@ -29,7 +32,7 @@ export class ReportComponent implements OnInit {
   public tableView: TableView<FlatActivity> = new TableView(this.columns);
   public filterForm: FormGroup = new FormGroup({});
 
-  constructor(private reportsService: ReportsService, private formBuilder: FormBuilder) {
+  constructor(private reportsService: ReportsService, private formBuilder: FormBuilder, private commonHelper: CommonHelperService) {
     this.initFilterForm();
   }
 
@@ -78,35 +81,11 @@ export class ReportComponent implements OnInit {
     this.classes.forEach( cls => {
       cls.students.forEach( stud => {
         this.activities.filter( act => stud === act.student).forEach( studAct => {
-          this.flatActivities.push(this.createFlatActivity(cls, studAct))
+          this.flatActivities.push(this.commonHelper.createFlatActivity(cls, studAct))
         });
       })
     })
     console.log(this.flatActivities);
-  }
-
-  /**
-   * Map a single flat activity
-   * @param cls
-   * @param studAct
-   * @private
-   */
-  private createFlatActivity(cls: Class, studAct: Activity): FlatActivity{
-    const flatActivity = new FlatActivity();
-    flatActivity.classId = cls.id;
-    flatActivity.className = cls.name;
-    flatActivity.student = studAct.student;
-    flatActivity.activityId = studAct.id;
-    flatActivity.content = studAct.content;
-    flatActivity.type = studAct.type;
-    flatActivity.skill = studAct.skill;
-    flatActivity.time = studAct.time;
-    // get max date from weeks
-    flatActivity.completedDate = moment.max(studAct.attempts.weeks.map(d => moment(d, 'DD/MM/YY', true))).format('DD/MM/YY');
-    // get average of values
-    flatActivity.average = studAct.attempts.values.reduce((a,b) => a + b, 0) / studAct.attempts.values.length;
-
-    return flatActivity;
   }
 
   /**
@@ -167,31 +146,4 @@ export class ReportComponent implements OnInit {
     return uniqueStudents.sort((a, b) => a.split(' ')[1]?.localeCompare(b.split(' ')[1]));
   }
 
-}
-
-export class FlatActivity{
-  classId: number;
-  className: string;
-  student: string;
-  activityId: number;
-  content: string;
-  type: string;
-  skill: string;
-  time: string;
-  completedDate: string;
-  average: number
-}
-
-export class FilterCriteria{
-  classId: number;
-  student: string;
-  dateFrom: string;
-  dateTo: string;
-
-  constructor(classId: number, student: string, dateFrom: string, dateTo: string) {
-    this.classId = classId;
-    this.student = student;
-    this.dateFrom = dateFrom;
-    this.dateTo = dateTo;
-  }
 }
