@@ -15,14 +15,14 @@
           </div>
           <!-- Login Form -->
           <form [formGroup]="loginForm" *ngIf="loginForm && isLogin">
-            <div class="default-input">
+            <div class="c-input">
               <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
                 <input required formControlName="username" matInput>
                 <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
-            <div class="default-input">
+            <div class="c-input">
               <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input required type="password" formControlName="password" matInput>
@@ -33,21 +33,21 @@
 
           <!-- Register Form -->
           <form [formGroup]="registerForm" *ngIf="registerForm && !isLogin">
-            <div class="default-input">
+            <div class="c-input">
               <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
                 <input required formControlName="username" matInput>
                 <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
-            <div class="default-input">
+            <div class="c-input">
               <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
                 <input required type="password" formControlName="password" matInput>
                 <mat-error>Required</mat-error>
               </mat-form-field>
             </div>
-            <div class="default-input">
+            <div class="c-input">
               <mat-form-field appearance="outline">
                 <mat-label>Confirm password</mat-label>
                 <input required type="password" formControlName="confirmPassword" matInput>

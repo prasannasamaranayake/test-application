@@ -1,3 +1,9 @@
 .c-table__container{
   width: 100%;
 }
+
+.filter-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--base-space-m);
+}

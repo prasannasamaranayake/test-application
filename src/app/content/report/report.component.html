@@ -1,44 +1,50 @@
-<div class="content-wrapper">
+<div class="content-wrapper container">
   <!-- Header -->
   <div class="content-header">
     <h1>Reporting - Student Snapshot</h1>
   </div>
   <!-- Body -->
-  <div class="content-body container">
+  <div class="content-body">
     <!-- Filter -->
-    <div class="row">
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Select Class</mat-label>
-          <mat-select>
-            <mat-option value="cls.name" *ngFor="let cls of classes">{{cls.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Select Student</mat-label>
-          <mat-select>
-            <mat-option value="stud" *ngFor="let stud of students">{{stud}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="col-sm-12 col-md-4 col-lg-4">
-        <mat-form-field class="example-form-field" appearance="outline">
-          <mat-label>First campaign</mat-label>
-          <mat-date-range-input
-            [rangePicker]="campaignOnePicker">
-            <input matStartDate placeholder="Start date" formControlName="start">
-            <input matEndDate placeholder="End date" formControlName="end">
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
-          <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
-        </mat-form-field>
-      </div>
+    <div class="filter-bar">
+      <mat-form-field appearance="outline">
+        <mat-label>Select Class</mat-label>
+        <mat-select>
+          <mat-option value="cls.name" *ngFor="let cls of classes">{{cls.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Student</mat-label>
+        <mat-select>
+          <mat-option value="stud" *ngFor="let stud of students">{{stud}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="example-form-field" appearance="outline">
+        <mat-label>Date Range</mat-label>
+        <mat-date-range-input
+          [rangePicker]="rangePicker">
+          <input matStartDate placeholder="Start date">
+          <input matEndDate placeholder="End date">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker></mat-date-range-picker>
+      </mat-form-field>
     </div>
     <!-- Chart -->
-    <div class="row">
-
+    <div class="chart">
+      <div class="chart__title">Overall results for the period: {{55}}</div>
+      <div class="c-progress-bar">
+        <div class="c-progress-bar__item c-progress-bar__item--unassigned" style="max-width: 20%"></div>
+        <div class="c-progress-bar__item c-progress-bar__item--week" style="max-width: 20%"></div>
+        <div class="c-progress-bar__item c-progress-bar__item--ok" style="max-width: 20%"></div>
+        <div class="c-progress-bar__item c-progress-bar__item--excellent" style="max-width: 40%"></div>
+      </div>
+      <div class="chart__legend">
+        <span class="chart__legend-item chart__legend-item--unassigned">Unassigned ({{5}}%)</span>
+        <span class="chart__legend-item chart__legend-item--week">Weak ({{5}}%)</span>
+        <span class="chart__legend-item chart__legend-item--ok">Ok ({{5}}%)</span>
+        <span class="chart__legend-item chart__legend-item--excellent">Excellent ({{5}}%)</span>
+      </div>
     </div>
     <!-- Table -->
     <div class="row">
