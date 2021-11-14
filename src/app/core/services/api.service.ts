@@ -12,6 +12,10 @@ export class ApiService {
   constructor(private http: HttpClient) {
   }
 
+  /**
+   * Get Master Data by given url
+   * @param url
+   */
   public getData<T>(url: string): Observable<T[]> {
     return this.http.get<T[]>(url)
       .pipe(
@@ -20,6 +24,10 @@ export class ApiService {
       );
   }
 
+  /**
+   * Get Resources from url and returns Body as observable
+   * @param url
+   */
   public get<T>(url: string): Observable<T[]> {
     return this.http.get<AppHttpResponse<T>>(url)
       .pipe(

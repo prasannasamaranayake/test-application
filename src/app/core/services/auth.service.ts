@@ -21,6 +21,9 @@ export class AuthService {
     this.loggedInUser = this.loggedInUserSubject.asObservable();
   }
 
+  /**
+   * Returns username of logged in user
+   */
   public get loggedInUserName(): string {
     return this.loggedInUserSubject.value.username;
   }
