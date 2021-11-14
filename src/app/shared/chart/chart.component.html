@@ -8,10 +8,10 @@
     <div class="c-progress-bar__item c-progress-bar__item--excellent" [style.max-width]="chartView.excellent+'%'"></div>
   </div>
   <div class="chart__legend">
-    <span class="chart__legend-item chart__legend-item--unassigned">Unassigned ({{chartView.unassigned}}%)</span>
-    <span class="chart__legend-item chart__legend-item--week">Weak ({{chartView.week}}%)</span>
-    <span class="chart__legend-item chart__legend-item--ok">Ok ({{chartView.ok}}%)</span>
-    <span class="chart__legend-item chart__legend-item--ok">Good ({{chartView.good}}%)</span>
-    <span class="chart__legend-item chart__legend-item--excellent">Excellent ({{chartView.excellent}}%)</span>
+    <span class="chart__legend-item chart__legend-item--unassigned">Unassigned ({{chartView.unassigned | number: '1.1-1'}}%)</span>
+    <span class="chart__legend-item chart__legend-item--week">Weak ({{chartView.week | number: '1.1-1'}}%)</span>
+    <span class="chart__legend-item chart__legend-item--ok">Ok ({{chartView.ok | number: '1.1-1'}}%)</span>
+    <span class="chart__legend-item chart__legend-item--ok">Good ({{chartView.good | number: '1.1-1'}}%)</span>
+    <span class="chart__legend-item chart__legend-item--excellent">Excellent ({{chartView.excellent | number: '1.1-1'}}%)</span>
   </div>
 </div>

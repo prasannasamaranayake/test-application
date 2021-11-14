@@ -45,9 +45,12 @@
           <ng-container matColumnDef="completedDate">
             <mat-header-cell *matHeaderCellDef mat-sort-header> DATE COMPLETED</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <ng-container>
+              <ng-container *ngIf="!element.isEmptyActivity">
                 {{element.completedDate | dateFormatter}}
               </ng-container>
+              <span class="c-table__info-row" *ngIf="element.isEmptyActivity">
+                No content has been completed by {{element.student}} {{datePeriodText}}
+              </span>
             </mat-cell>
           </ng-container>
 
@@ -55,7 +58,7 @@
           <ng-container matColumnDef="content">
             <mat-header-cell *matHeaderCellDef mat-sort-header> CONTENT</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <ng-container>
+              <ng-container *ngIf="!element.isEmptyActivity">
                 <div class="body-base-medium"> {{element.content}}</div>
               </ng-container>
             </mat-cell>
@@ -65,7 +68,7 @@
           <ng-container matColumnDef="type">
             <mat-header-cell *matHeaderCellDef mat-sort-header> TYPE</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <ng-container>
+              <ng-container *ngIf="!element.isEmptyActivity">
                 {{element.type}}
               </ng-container>
             </mat-cell>
@@ -75,7 +78,7 @@
           <ng-container matColumnDef="skill">
             <mat-header-cell *matHeaderCellDef mat-sort-header> SKILL</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <ng-container>
+              <ng-container *ngIf="!element.isEmptyActivity">
                 {{element.skill}}
               </ng-container>
             </mat-cell>
@@ -85,7 +88,7 @@
           <ng-container matColumnDef="average">
             <mat-header-cell *matHeaderCellDef mat-sort-header> RESULT</mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <ng-container>
+              <ng-container *ngIf="!element.isEmptyActivity">
                 {{element.average}}%
               </ng-container>
             </mat-cell>

@@ -55,22 +55,45 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  /**
+   * Returns the percentages needed to show the horizontal stacked bar chart
+   */
   public get chartView(): ChartView{
-    const excellentCount = this.tableView.dataSource.data.filter( data => data.average >= 90).length;
-    const goodCount = this.tableView.dataSource.data.filter( data => data.average >= 80 && data.average < 90).length;
-    const okCount = this.tableView.dataSource.data.filter( data => data.average >= 60 && data.average < 80).length;
-    const weekCount = this.tableView.dataSource.data.filter( data => data.average < 60).length;
-    const unassignedCount = 20;
-    return new ChartView()
-    // return new ChartView(excellentCount, goodCount, okCount, weekCount, unassignedCount)
+    const excellentCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 90).length;
+    const goodCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 80 && data.average < 90).length;
+    const okCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 60 && data.average < 80).length;
+    const weekCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average < 60).length;
+    const unassignedCount = this.tableView.dataSource.data.filter( data => data.isEmptyActivity).length;
+
+    const excellentPercent = (excellentCount / this.tableView.dataSource.data.length) * 100;
+    const goodPercent = (goodCount / this.tableView.dataSource.data.length) * 100;
+    const okPercent = (okCount / this.tableView.dataSource.data.length) * 100;
+    const weekPercent = (weekCount / this.tableView.dataSource.data.length) * 100;
+    const unassignedPercent = (unassignedCount / this.tableView.dataSource.data.length) * 100;
+
+    return new ChartView(excellentPercent, goodPercent, okPercent, weekPercent, unassignedPercent)
   }
 
+  /**
+   * Returns the header of the horizontal stacked bar chart
+   */
   public get headerText(): string{
     const df = this.filterForm.get('dateFrom')?.value;
     const dt = this.filterForm.get('dateTo')?.value;
     const formattedDf = df ? moment(df).format('DD MMM YYYY') : '';
     const formattedDt = dt ? moment(dt).format('DD MMM YYYY'): '';
     return formattedDf && formattedDt ? `Overall results for the period: ${formattedDf} - ${formattedDt}` : 'Overall results';
+  }
+
+  /**
+   * Returns the filtered fate periods as a text
+   */
+  public get datePeriodText(): string{
+    const df = this.filterForm.get('dateFrom')?.value;
+    const dt = this.filterForm.get('dateTo')?.value;
+    const formattedDf = df ? moment(df).format('DD MMM YYYY') : '';
+    const formattedDt = dt ? moment(dt).format('DD MMM YYYY'): '';
+    return formattedDf && formattedDt ? ` for ${formattedDf} to ${formattedDt}` : '';
   }
 
   /**
@@ -117,6 +140,10 @@ export class ReportComponent implements OnInit {
    */
   private filterDataSource(filterCriteria: FilterCriteria){
     const filteredData = this.flatActivities.filter( data => this.filterData(data, filterCriteria));
+    if(filterCriteria.classId){
+      const allStudentsInClass = this.classes.filter(cls => cls.id === filterCriteria.classId).map( cls => cls.students)[0];
+      this.addMissingStudents(filteredData, allStudentsInClass);
+    }
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(filteredData);
   }
 
@@ -144,6 +171,23 @@ export class ReportComponent implements OnInit {
     const uniqueStudents = [...new Set( duplicatedStudentsArr.reduce((a, b) => a.concat(b), []) ) ];
     // Sorting by last name
     return uniqueStudents.sort((a, b) => a.split(' ')[1]?.localeCompare(b.split(' ')[1]));
+  }
+
+  /**
+   * Creates the missing activity for students in a class (isEmptyActivity = true)
+   * @param filterData
+   * @param allStudentsInClass
+   * @private
+   */
+  private addMissingStudents(filterData: FlatActivity[], allStudentsInClass: string[]){
+    allStudentsInClass.forEach( std => {
+      if(filterData.filter( fd => fd.student === std).length === 0){
+        const emptyActivity = new FlatActivity(true);
+        emptyActivity.student = std;
+        emptyActivity.activityId = -1;
+        filterData.push(emptyActivity);
+      }
+    })
   }
 
 }

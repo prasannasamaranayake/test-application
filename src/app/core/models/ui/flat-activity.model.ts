@@ -9,4 +9,9 @@ export class FlatActivity{
   time: string;
   completedDate: string;
   average: number
+  isEmptyActivity: boolean // To identify if manually added activity to show missing data
+
+  constructor(isEmptyActivity = false) {
+    this.isEmptyActivity = isEmptyActivity;
+  }
 }
