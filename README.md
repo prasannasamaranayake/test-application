@@ -26,7 +26,7 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 
 ## Features
 
-1. Login, register and logout with validations with simple usability aspects.
+1. Login, register, show logged user and logout with validations with simple usability aspects.
 1. Report filter with class, student and date range with missing student activity entries. 
    (Assumptions - Completed date is the latest attempt date and average of values considered on it) 
 1. Horizontal stacked bar chart when only class filter applied.
