@@ -12,3 +12,9 @@
   position: absolute;
   color: var(--body-content-secondary);
 }
+
+.c-table__container{
+  .mat-header-row{
+    background: var(--body-background-header);
+  }
+}
