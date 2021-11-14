@@ -108,7 +108,6 @@ export class ReportComponent implements OnInit {
         });
       })
     })
-    console.log(this.flatActivities);
   }
 
   /**
