@@ -23,7 +23,7 @@ export class ReportComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
-  public readonly columns = ['completedDate', 'content','type', 'skill', 'average', 'time'];
+  public readonly columns = ['completedDate', 'content', 'type', 'skill', 'average', 'time'];
 
   public classes: Class[] = [];
   public activities: Activity[] = [];
@@ -47,8 +47,8 @@ export class ReportComponent implements OnInit {
         this.createTable();
       });
 
-    this.filterForm.valueChanges.subscribe( values => {
-      if(values){
+    this.filterForm.valueChanges.subscribe(values => {
+      if (values) {
         const filterCriteria = new FilterCriteria(values.classId, values.student, values.dateFRom, values.dateTo);
         this.filterDataSource(filterCriteria);
       }
@@ -58,12 +58,12 @@ export class ReportComponent implements OnInit {
   /**
    * Returns the percentages needed to show the horizontal stacked bar chart
    */
-  public get chartView(): ChartView{
-    const excellentCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 90).length;
-    const goodCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 80 && data.average < 90).length;
-    const okCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average >= 60 && data.average < 80).length;
-    const weekCount = this.tableView.dataSource.data.filter( data => !data.isEmptyActivity && data.average < 60).length;
-    const unassignedCount = this.tableView.dataSource.data.filter( data => data.isEmptyActivity).length;
+  public get chartView(): ChartView {
+    const excellentCount = this.tableView.dataSource.data.filter(data => !data.isEmptyActivity && data.average >= 90).length;
+    const goodCount = this.tableView.dataSource.data.filter(data => !data.isEmptyActivity && data.average >= 80 && data.average < 90).length;
+    const okCount = this.tableView.dataSource.data.filter(data => !data.isEmptyActivity && data.average >= 60 && data.average < 80).length;
+    const weekCount = this.tableView.dataSource.data.filter(data => !data.isEmptyActivity && data.average < 60).length;
+    const unassignedCount = this.tableView.dataSource.data.filter(data => data.isEmptyActivity).length;
 
     const excellentPercent = (excellentCount / this.tableView.dataSource.data.length) * 100;
     const goodPercent = (goodCount / this.tableView.dataSource.data.length) * 100;
@@ -77,22 +77,22 @@ export class ReportComponent implements OnInit {
   /**
    * Returns the header of the horizontal stacked bar chart
    */
-  public get headerText(): string{
+  public get headerText(): string {
     const df = this.filterForm.get('dateFrom')?.value;
     const dt = this.filterForm.get('dateTo')?.value;
     const formattedDf = df ? moment(df).format('DD MMM YYYY') : '';
-    const formattedDt = dt ? moment(dt).format('DD MMM YYYY'): '';
+    const formattedDt = dt ? moment(dt).format('DD MMM YYYY') : '';
     return formattedDf && formattedDt ? `Overall results for the period: ${formattedDf} - ${formattedDt}` : 'Overall results';
   }
 
   /**
    * Returns the filtered fate periods as a text
    */
-  public get datePeriodText(): string{
+  public get datePeriodText(): string {
     const df = this.filterForm.get('dateFrom')?.value;
     const dt = this.filterForm.get('dateTo')?.value;
     const formattedDf = df ? moment(df).format('DD MMM YYYY') : '';
-    const formattedDt = dt ? moment(dt).format('DD MMM YYYY'): '';
+    const formattedDt = dt ? moment(dt).format('DD MMM YYYY') : '';
     return formattedDf && formattedDt ? ` for ${formattedDf} to ${formattedDt}` : '';
   }
 
@@ -100,10 +100,10 @@ export class ReportComponent implements OnInit {
    * Create Flatten Objects of Activities
    * @private
    */
-  private flattenActivities(){
-    this.classes.forEach( cls => {
-      cls.students.forEach( stud => {
-        this.activities.filter( act => stud === act.student).forEach( studAct => {
+  private flattenActivities() {
+    this.classes.forEach(cls => {
+      cls.students.forEach(stud => {
+        this.activities.filter(act => stud === act.student).forEach(studAct => {
           this.flatActivities.push(this.commonHelper.createFlatActivity(cls, studAct))
         });
       })
@@ -115,7 +115,7 @@ export class ReportComponent implements OnInit {
    * Init filter form
    * @private
    */
-  private initFilterForm(){
+  private initFilterForm() {
     this.filterForm = this.formBuilder.group({
       classId: [''],
       student: [''],
@@ -128,7 +128,7 @@ export class ReportComponent implements OnInit {
    * Init mat table
    * @private
    */
-  private createTable(){
+  private createTable() {
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(this.flatActivities);
     this.tableView.dataSource.sort = this.sort;
   }
@@ -138,10 +138,11 @@ export class ReportComponent implements OnInit {
    * @param filterCriteria
    * @private
    */
-  private filterDataSource(filterCriteria: FilterCriteria){
-    const filteredData = this.flatActivities.filter( data => this.filterData(data, filterCriteria));
-    if(filterCriteria.classId){
-      const allStudentsInClass = this.classes.filter(cls => cls.id === filterCriteria.classId).map( cls => cls.students)[0];
+  private filterDataSource(filterCriteria: FilterCriteria) {
+    const filteredData = this.flatActivities.filter(data => this.filterData(data, filterCriteria));
+    // Adds missing items only when class is selected and not a specific student is selected
+    if (filterCriteria.classId && !filterCriteria.student) {
+      const allStudentsInClass = this.classes.filter(cls => cls.id === filterCriteria.classId).map(cls => cls.students)[0];
       this.addMissingStudents(filteredData, allStudentsInClass);
     }
     this.tableView.dataSource = new MatTableDataSource<FlatActivity>(filteredData);
@@ -153,7 +154,7 @@ export class ReportComponent implements OnInit {
    * @param filterCriteria
    * @private
    */
-  private filterData(activity: FlatActivity, filterCriteria: FilterCriteria): boolean{
+  private filterData(activity: FlatActivity, filterCriteria: FilterCriteria): boolean {
     const classMatched = !filterCriteria.classId || activity.classId === filterCriteria.classId;
     const studentMatched = !filterCriteria.student || activity.student === filterCriteria.student;
     const dateFromMatched = !filterCriteria.dateFrom || moment(activity.completedDate, 'DD/MM/YY', true) >= moment(filterCriteria.dateFrom);
@@ -166,9 +167,9 @@ export class ReportComponent implements OnInit {
    * Extract uniques students from classes array
    * @private
    */
-  private getUniqueStudents(): string[]{
+  private getUniqueStudents(): string[] {
     const duplicatedStudentsArr = this.classes.map(cls => cls.students);
-    const uniqueStudents = [...new Set( duplicatedStudentsArr.reduce((a, b) => a.concat(b), []) ) ];
+    const uniqueStudents = [...new Set(duplicatedStudentsArr.reduce((a, b) => a.concat(b), []))];
     // Sorting by last name
     return uniqueStudents.sort((a, b) => a.split(' ')[1]?.localeCompare(b.split(' ')[1]));
   }
@@ -179,9 +180,9 @@ export class ReportComponent implements OnInit {
    * @param allStudentsInClass
    * @private
    */
-  private addMissingStudents(filterData: FlatActivity[], allStudentsInClass: string[]){
-    allStudentsInClass.forEach( std => {
-      if(filterData.filter( fd => fd.student === std).length === 0){
+  private addMissingStudents(filterData: FlatActivity[], allStudentsInClass: string[]) {
+    allStudentsInClass.forEach(std => {
+      if (filterData.filter(fd => fd.student === std).length === 0) {
         const emptyActivity = new FlatActivity(true);
         emptyActivity.student = std;
         emptyActivity.activityId = -1;
